@@ -7,10 +7,11 @@ import { useState, useEffect } from 'react'
 import axios from 'axios';
 
 import Home from "./Components/Home/Home";
-import ControlPanel from "./Components/ControlPanel/ControlPanel";
+import FilieresControl from "./Components/FilieresControl/FilieresControl";
 import Header from "../Header/Header";
 
 import "./HomePage.css";
+import FiliereNiveau from './Components/FilieresControl/Components/Filiere/FiliereNiveau';
 
 function HomePage() {
 
@@ -67,7 +68,8 @@ function HomePage() {
             <Header />
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/filieres" element={<ControlPanel />} />
+                <Route path="/filieres" element={<FilieresControl />} />
+                <Route path="/filieres/niveau/:id" element={<FiliereNiveau />} />
                 {/* <Route path="/offer/:id" element={<Offer loggedUserId={loggedUserId} loggedUserRole={loggedUserRole} />} /> */}
                 <Route path="/*" element={<h2>Default route for Home Page</h2>} />
             </Routes>

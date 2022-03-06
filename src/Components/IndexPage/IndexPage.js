@@ -31,11 +31,11 @@ function IndexPage() {
 
     useEffect(() => {
         if (displayLogin) {
-            document.title = "Job Offers - Login";
+            document.title = "School Attendances - Login";
         } else if (displaySignup) {
-            document.title = "Job Offers - Signup";
+            document.title = "School Attendances - Signup";
         } else {
-            document.title = "Job Offers - Index";
+            document.title = "School Attendances - Index";
         }
     }, [displayLogin, displaySignup]);
 
