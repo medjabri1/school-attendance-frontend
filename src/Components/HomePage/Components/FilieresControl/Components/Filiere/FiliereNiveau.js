@@ -10,9 +10,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHandPointRight, faLockOpen, faClipboardList } from '@fortawesome/free-solid-svg-icons'
 
 import "./FiliereNiveau.css";
-import SubjectsList from './Components/SubjectsList/SubjectsList';
 
-function FiliereNiveau({ filiereName, niveauLibelle }) {
+import SubjectsList from './Components/SubjectsList/SubjectsList';
+import StudentsList from './Components/StudentsList/StudentsList';
+import SessionsList from './Components/SessionsList/SessionsList';
+
+function FiliereNiveau() {
 
     // CONST - VARS
 
@@ -79,6 +82,8 @@ function FiliereNiveau({ filiereName, niveauLibelle }) {
                 </div>
 
                 <SubjectsList filiereId={filiere_id} niveauId={niveau_id} />
+                <StudentsList filiereId={filiere_id} niveauId={niveau_id} />
+                <SessionsList filiereId={filiere_id} niveauId={niveau_id} />
 
             </div>
         </div>

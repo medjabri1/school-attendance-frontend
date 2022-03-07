@@ -12,6 +12,7 @@ import Header from "../Header/Header";
 
 import "./HomePage.css";
 import FiliereNiveau from './Components/FilieresControl/Components/Filiere/FiliereNiveau';
+import Sessions from './Components/Sessions/Sessions';
 
 function HomePage() {
 
@@ -70,7 +71,7 @@ function HomePage() {
                 <Route path="/" element={<Home />} />
                 <Route path="/filieres" element={<FilieresControl />} />
                 <Route path="/filieres/niveau/:id" element={<FiliereNiveau />} />
-                {/* <Route path="/offer/:id" element={<Offer loggedUserId={loggedUserId} loggedUserRole={loggedUserRole} />} /> */}
+                <Route path="/sessions" element={<Sessions />} />
                 <Route path="/*" element={<h2>Default route for Home Page</h2>} />
             </Routes>
         </div>

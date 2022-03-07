@@ -1,4 +1,4 @@
-.subjects-list {
+.students-list {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,7 +10,7 @@
     margin-bottom: 30px;
 }
 
-.subjects-list .section-title {
+.students-list .section-title {
     margin-top: 10px;
     word-spacing: 1px;
     font-size: 1.3rem;
@@ -50,7 +50,7 @@
     font-size: 1.2rem;
 }
 
-.subjects-list .section-title::before, .subjects-list .section-title::after {
+.students-list .section-title::before, .students-list .section-title::after {
     content: "";
     position: absolute;
     top: 50%;
@@ -62,12 +62,12 @@
     background-color: #181818;
 }
 
-.subjects-list .section-title::before {
+.students-list .section-title::before {
     right: -40px;
     left: unset;
 }
 
-.subjects-list .toggle-list-icon{
+.students-list .toggle-list-icon{
     position: absolute;
     top: 20px;
     right: 20px;
@@ -76,7 +76,7 @@
     cursor: pointer;
 }
 
-.subjects-list .list-items {
+.students-list .list-items {
     width: 100%;
     height: fit-content;
     display: grid;
@@ -86,11 +86,19 @@
     user-select: none;
 }
 
-.subjects-list .list-items.inline {
+.students-list .list-items.inline {
     grid-template-columns: repeat(1, 1fr);
 }
 
-.subjects-list .list-items .subject-item {
+.students-list .list-items .collapsible {
+    display: none;
+}
+
+.students-list .list-items.inline .collapsible {
+    display: unset;
+}
+
+.students-list .list-items .student-item {
     box-shadow: 0px 0px 2px #181818cc, 0px 0px 5px #18181866;
     padding: 10px;
     border-radius: 5px;
@@ -99,14 +107,26 @@
     transition: all 200ms ease-in-out;
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.subjects-list .list-items .subject-item:hover {
+.students-list .list-items .student-item:hover {
     opacity: 1;
     transform: scale(1.02);
 }
 
-.subjects-list .list-items .subject-item .subject-title {
-    font-size: 1rem;
+.students-list .list-items .student-item * {
+    font-size: .9rem;
     font-weight: 100;
+    width: 100%;
+}
+
+.students-list .list-items .student-item .student-name {
+    font-size: 1rem;
+}
+
+.students-list .list-items.inline .student-item .student-name {
+    font-weight: 600;
 }

@@ -14,7 +14,7 @@ import AjouterNiveau from './Components/AjouterNiveau/AjouterNiveau';
 
 import "./FilieresControl.css";
 
-function ControlPanel() {
+function FilieresControl() {
 
     // USE STATE HOOK
     let [displayCreateNewFiliere, setDisplayCreateNewFiliere] = useState(false);
@@ -152,4 +152,4 @@ function ControlPanel() {
     )
 }
 
-export default ControlPanel;
+export default FilieresControl;

@@ -10,7 +10,7 @@ import axios from 'axios';
 
 import "./NewSubject.css";
 
-function AjouterFiliere({ closeModal }) {
+function NewSubject({ closeModal }) {
 
     // USE STATE HOOK
     let [subjectTitle, setSubjectTitle] = useState("");
@@ -54,4 +54,4 @@ function AjouterFiliere({ closeModal }) {
     )
 }
 
-export default AjouterFiliere
+export default NewSubject

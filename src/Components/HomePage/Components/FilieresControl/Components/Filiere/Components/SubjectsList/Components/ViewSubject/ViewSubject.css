@@ -93,6 +93,101 @@
 
 .subject-container .subject-infos .stats-item .stats-data {
     opacity: 1;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 900;
+}
+
+/* SESSIONS List */
+
+.subject-container .subject-sessions-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: fit-content !important;
+    max-height: 400px;
+    overflow-y: scroll;
+    padding: 5px;
+    padding-top: 150px;
+}
+
+.subject-container .subject-sessions-list::-webkit-scrollbar {
+    width: 10px;
+    background-color: transparent;
+}
+
+.subject-container .subject-sessions-list::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.subject-container .subject-sessions-list::-webkit-scrollbar-thumb {
+    background-color: #18181833;
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.subject-container .subject-sessions-list .list-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    opacity: .8;
+}
+
+.subject-container .subject-sessions-list .list-header span {
+    width: 100%;
+    text-align: center;
+    font-size: .9rem;
+}
+
+.subject-container .subject-sessions-list .list-data {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.subject-container .subject-sessions-list .list-data .list-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-content: space-between;
+    padding: 10px 10px;
+    margin: 5px 0px;
+    box-shadow: 0px 0px 2px #18181855, 0px 0px 6px #18181855;
+    border-radius: 2px;
+}
+
+.subject-container .subject-sessions-list .list-data .list-item > * {
+    min-width: fit-content;
+    font-size: .9rem;
+}
+
+.subject-container .subject-sessions-list .list-data .list-item .salle {
+    width: 100%;
+}
+
+.subject-container .subject-sessions-list .list-data .list-item .date {
+    font-size: 1rem;
+    width: 100%;
+}
+
+.subject-container .subject-sessions-list .list-data .list-item .submitted-at {
+    font-size: 1rem;
+    opacity: .8;
+}
+
+.subject-container .subject-sessions-list .list-data .list-item .view-details {
+    padding: 5px 10px;
+    border: 2px solid #181818;
+    background-color: #18181822;
+    opacity: .8;
+}
+
+.subject-container .subject-sessions-list .list-data .list-item .view-details .icon {
+    margin-right: 5px;
 }

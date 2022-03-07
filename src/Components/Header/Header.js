@@ -4,7 +4,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import ReactDOM from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faSchool, faSearch, faUserTie, faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faSchool, faUserTie, faCog, faSignOutAlt, faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
 
 import axios from 'axios'
 
@@ -34,7 +34,7 @@ function Navbar() {
                 <div className="header-logo">Attendances</div>
                 <ul className="header-nav">
 
-                    {/* Home Link */}
+                    {/* Overview Link */}
                     <Link className="header-nav-link" to="/home/">
                         <FontAwesomeIcon icon={faSchool} className="link-icon" />
                         <span>Overview</span>
@@ -46,8 +46,14 @@ function Navbar() {
                         <span>Filieres</span>
                     </Link>
 
-                    {/* Filiere Link */}
-                    <Link className="header-nav-link" to="/home/control">
+                    {/* Sessions Link */}
+                    <Link className="header-nav-link" to="/home/sessions">
+                        <FontAwesomeIcon icon={faCalendarAlt} className="link-icon" />
+                        <span>Sessions</span>
+                    </Link>
+
+                    {/* Profs Link */}
+                    <Link className="header-nav-link" to="/home/profs">
                         <FontAwesomeIcon icon={faUserTie} className="link-icon" />
                         <span>Profs</span>
                     </Link>
