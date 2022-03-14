@@ -10,9 +10,36 @@ import { faEye } from '@fortawesome/free-solid-svg-icons'
 
 import axios from 'axios';
 
+import { API_BASE_URL } from '../../../../../../../../../../Constants/Global';
+
 import "./ViewSubject.css";
 
 function SubjectItem({ closeModal, subject_id }) {
+
+    // USE STATE HOOK 
+
+    let [subjectData, setSubjectData] = useState({ "created_at": "0000-00-00" });
+    let [profData, setProfData] = useState({ "name": "Mohammed BADAOUI" });
+    let [sessionsList, setSessionsList] = useState([]);
+
+    // USE EFFECT HOOK 
+
+    useEffect(() => {
+        requestSubjectData();
+    }, []);
+
+    // REQUEST SUBJECT DATA
+
+    let requestSubjectData = () => {
+
+        axios.get(`${API_BASE_URL}/overview/subject/${subject_id}`)
+            .then((res) => {
+                let data = res.data;
+                setSubjectData(data.subject);
+                setSessionsList(data.sessions);
+            });
+
+    }
 
     return (
         <div className="subject-item-modal">
@@ -22,23 +49,23 @@ function SubjectItem({ closeModal, subject_id }) {
             <div className="subject-container">
                 <div className="subject-title">
                     <FontAwesomeIcon icon={faEye} className="icon" />
-                    <span>Advanced Databases</span>
+                    <span>{subjectData.name}</span>
                 </div>
 
                 <div className="subject-infos">
                     <div className="stats-item">
                         <p className="stats-label">Total Sessions</p>
-                        <p className="stats-data">{subject_id}</p>
+                        <p className="stats-data">{sessionsList.length}</p>
                     </div>
 
                     <div className="stats-item">
                         <p className="stats-label">Prof</p>
-                        <p className="stats-data">Mohammed JABRI</p>
+                        <p className="stats-data">{profData.name}</p>
                     </div>
 
                     <div className="stats-item">
                         <p className="stats-label">Created at</p>
-                        <p className="stats-data">10-11-2021</p>
+                        <p className="stats-data">{subjectData.created_at.substr(0, 10)}</p>
                     </div>
                 </div>
 
@@ -52,77 +79,20 @@ function SubjectItem({ closeModal, subject_id }) {
 
                     <div className="list-data">
 
-                        <div className="list-item">
-                            <p className="salle">Amphi Al-Khawarizmi</p>
-                            <p className="date">10-12-2020</p>
-                            <Link className="view-details" to="/session/" target="_blank">
-                                <FontAwesomeIcon icon={faEye} className="icon" />
-                                <span>Details</span>
-                            </Link>
-                        </div>
+                        {
+                            sessionsList.map(session => (
 
-                        <div className="list-item">
-                            <p className="salle">Amphi Al-Khawarizmi</p>
-                            <p className="date">10-12-2020</p>
-                            <Link className="view-details" to="/session/" target="_blank">
-                                <FontAwesomeIcon icon={faEye} className="icon" />
-                                <span>Details</span>
-                            </Link>
-                        </div>
+                                <div className="list-item" key={session.id}>
+                                    <p className="salle">{session.salle}</p>
+                                    <p className="date">{session.created_at.substr(0, 16).replace('T', ' ')}</p>
+                                    <Link className="view-details" to={"/home/sessions/session/" + session.id} target="_blank">
+                                        <FontAwesomeIcon icon={faEye} className="icon" />
+                                        <span>Details</span>
+                                    </Link>
+                                </div>
 
-                        <div className="list-item">
-                            <p className="salle">Amphi Al-Khawarizmi</p>
-                            <p className="date">10-12-2020</p>
-                            <Link className="view-details" to="/session/" target="_blank">
-                                <FontAwesomeIcon icon={faEye} className="icon" />
-                                <span>Details</span>
-                            </Link>
-                        </div>
-
-                        <div className="list-item">
-                            <p className="salle">Amphi Al-Khawarizmi</p>
-                            <p className="date">10-12-2020</p>
-                            <Link className="view-details" to="/session/" target="_blank">
-                                <FontAwesomeIcon icon={faEye} className="icon" />
-                                <span>Details</span>
-                            </Link>
-                        </div>
-
-                        <div className="list-item">
-                            <p className="salle">Amphi Al-Khawarizmi</p>
-                            <p className="date">10-12-2020</p>
-                            <Link className="view-details" to="/session/" target="_blank">
-                                <FontAwesomeIcon icon={faEye} className="icon" />
-                                <span>Details</span>
-                            </Link>
-                        </div>
-
-                        <div className="list-item">
-                            <p className="salle">Amphi Al-Khawarizmi</p>
-                            <p className="date">10-12-2020</p>
-                            <Link className="view-details" to="/session/" target="_blank">
-                                <FontAwesomeIcon icon={faEye} className="icon" />
-                                <span>Details</span>
-                            </Link>
-                        </div>
-
-                        <div className="list-item">
-                            <p className="salle">Amphi Al-Khawarizmi</p>
-                            <p className="date">10-12-2020</p>
-                            <Link className="view-details" to="/session/" target="_blank">
-                                <FontAwesomeIcon icon={faEye} className="icon" />
-                                <span>Details</span>
-                            </Link>
-                        </div>
-
-                        <div className="list-item">
-                            <p className="salle">Amphi Al-Khawarizmi</p>
-                            <p className="date">10-12-2020</p>
-                            <Link className="view-details" to="/session/" target="_blank">
-                                <FontAwesomeIcon icon={faEye} className="icon" />
-                                <span>Details</span>
-                            </Link>
-                        </div>
+                            ))
+                        }
 
                     </div>
 

@@ -1,6 +1,8 @@
 import React from 'react'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+
+import axios from 'axios';
 
 import ReactDOM from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,7 +12,9 @@ import NewStudent from './Components/NewStudent/NewStudent'
 
 import "./StudentsList.css";
 
-function StudentsList({ filiereId, niveauId }) {
+import { API_BASE_URL } from '../../../../../../../../Constants/Global';
+
+function StudentsList({ level_id }) {
 
     // USE STATE HOOK
 
@@ -18,10 +22,35 @@ function StudentsList({ filiereId, niveauId }) {
 
     let [toggledListStyle, setToggledListStyle] = useState(false);
 
+    let [studentsList, setStudentsList] = useState([]);
+
+    let [responseMessage, setResponseMessage] = useState("");
+
+    // USE EFFECT HOOK 
+
+    useEffect(() => {
+        requestStudentsData();
+    }, []);
+
     // CLOSE MODAL 
 
     let closeModal = () => {
         setDisplayCreateStudent(false);
+    }
+
+    let refresh = () => {
+        requestStudentsData();
+    }
+
+    // REQUEST STUDENTS LIST DATA
+
+    let requestStudentsData = () => {
+
+        axios.get(`${API_BASE_URL}/students/level/${level_id}`)
+            .then((res) => {
+                setStudentsList(res.data);
+            });
+
     }
 
     return (
@@ -41,33 +70,20 @@ function StudentsList({ filiereId, niveauId }) {
                     }
                 </div>
 
-                <div className="student-item">
-                    <h2 className="student-name">Mohammed JABRI</h2>
-                    <p className="collapsible">-102909</p>
-                    <p className="collapsible">-CIN: F653602</p>
-                    <p className="collapsible">-CNE: H130385779</p>
-                </div>
 
-                <div className="student-item">
-                    <h2 className="student-name">Wiam LOUAH</h2>
-                    <p className="collapsible">-102909</p>
-                    <p className="collapsible">-CIN: C676723</p>
-                    <p className="collapsible">-CNE: F7678676</p>
-                </div>
 
-                <div className="student-item">
-                    <h2 className="student-name">Soukayna CHATRY</h2>
-                    <p className="collapsible">-908789</p>
-                    <p className="collapsible">-CIN: E178788</p>
-                    <p className="collapsible">-CNE: H130385779</p>
-                </div>
+                {
+                    studentsList.map(student => (
 
-                <div className="student-item">
-                    <h2 className="student-name">Ilham LAZAR</h2>
-                    <p className="collapsible">-167567</p>
-                    <p className="collapsible">-CIN: F697888</p>
-                    <p className="collapsible">-CNE: H13037787</p>
-                </div>
+                        <div className="student-item" key={student.id}>
+                            <h2 className="student-name">{student.first_name} {student.last_name}</h2>
+                            <p className="collapsible">-{student.apogee}</p>
+                            <p className="collapsible">-CIN: {student.cin}</p>
+                            <p className="collapsible">-CNE: {student.cne}</p>
+                        </div>
+
+                    ))
+                }
 
             </div>
 
@@ -76,13 +92,25 @@ function StudentsList({ filiereId, niveauId }) {
                     <FontAwesomeIcon icon={faPlusCircle} className="action-icon" />
                     <span>Add new Student</span>
                 </div>
+
+                {
+                    responseMessage.length == 0 ?
+                        null :
+
+                        <p className="response-message" onClick={() => setResponseMessage("")} title="Click to remove">
+                            {responseMessage}
+                        </p>
+                }
             </div>
 
             {/* Create Student */}
 
             {
                 displayCreateStudent ?
-                    <NewStudent closeModal={closeModal} niveau_id={niveauId} />
+                    <NewStudent level_id={level_id}
+                        closeModal={closeModal}
+                        setResponseMessage={setResponseMessage}
+                        refresh={refresh} />
                     : null
             }
 

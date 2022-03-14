@@ -1,6 +1,8 @@
 import React from 'react'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+
+import axios from 'axios';
 
 import ReactDOM from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,7 +12,9 @@ import "./SubjectsList.css";
 import ViewSubject from './Components/ViewSubject/ViewSubject'
 import NewSubject from './Components/NewSubject/NewSubject'
 
-function SubjectsList({ filiereId, niveauId }) {
+import { API_BASE_URL } from '../../../../../../../../Constants/Global';
+
+function SubjectsList({ level_id }) {
 
     // USE STATE HOOK
 
@@ -20,6 +24,16 @@ function SubjectsList({ filiereId, niveauId }) {
     let [displayCreateSubject, setDisplayCreateSubject] = useState(false);
 
     let [toggledListStyle, setToggledListStyle] = useState(false);
+
+    let [subjectsList, setSubjectsList] = useState([]);
+
+    let [responseMessage, setResponseMessage] = useState("");
+
+    // USE EFFECT HOOK 
+
+    useEffect(() => {
+        requestSubjectsData();
+    }, []);
 
     // SUBJECT ITEM HANDLE CLICK
 
@@ -33,6 +47,21 @@ function SubjectsList({ filiereId, niveauId }) {
     let closeModal = () => {
         setDisplaySubjectModal(false);
         setDisplayCreateSubject(false);
+    }
+
+    let refresh = () => {
+        requestSubjectsData();
+    }
+
+    // REQUEST SUBJECTS LIST DATA
+
+    let requestSubjectsData = () => {
+
+        axios.get(`${API_BASE_URL}/subjects/level/${level_id}`)
+            .then((res) => {
+                setSubjectsList(res.data);
+            });
+
     }
 
     return (
@@ -52,33 +81,16 @@ function SubjectsList({ filiereId, niveauId }) {
                     }
                 </div>
 
-                <div className="subject-item" onClick={() => subjectItemClick(11)}>
-                    <h2 className="subject-title">Big Data</h2>
-                </div>
-                <div className="subject-item" onClick={() => subjectItemClick(12)}>
-                    <h2 className="subject-title">Cloud Computing</h2>
-                </div>
-                <div className="subject-item" onClick={() => subjectItemClick(13)}>
-                    <h2 className="subject-title">Data Analysis</h2>
-                </div>
-                <div className="subject-item" onClick={() => subjectItemClick(14)}>
-                    <h2 className="subject-title">Statistics</h2>
-                </div>
-                <div className="subject-item" onClick={() => subjectItemClick(15)}>
-                    <h2 className="subject-title">Embedded Systems</h2>
-                </div>
-                <div className="subject-item" onClick={() => subjectItemClick(16)}>
-                    <h2 className="subject-title">OO Programming</h2>
-                </div>
-                <div className="subject-item" onClick={() => subjectItemClick(17)}>
-                    <h2 className="subject-title">UML & Design Patterns</h2>
-                </div>
-                <div className="subject-item" onClick={() => subjectItemClick(19)}>
-                    <h2 className="subject-title">Business English</h2>
-                </div>
-                <div className="subject-item" onClick={() => subjectItemClick(119)}>
-                    <h2 className="subject-title">Advanced Databases</h2>
-                </div>
+                {
+                    subjectsList.map(subject => (
+
+                        <div className="subject-item" onClick={() => subjectItemClick(subject.id)} key={subject.id}>
+                            <h2 className="subject-title">{subject.name}</h2>
+                        </div>
+
+                    ))
+                }
+
             </div>
 
             <div className="actions">
@@ -86,6 +98,15 @@ function SubjectsList({ filiereId, niveauId }) {
                     <FontAwesomeIcon icon={faPlusCircle} className="action-icon" />
                     <span>Add new Subject</span>
                 </div>
+
+                {
+                    responseMessage.length == 0 ?
+                        null :
+
+                        <p className="response-message" onClick={() => setResponseMessage("")} title="Click to remove">
+                            {responseMessage}
+                        </p>
+                }
             </div>
 
             {/* View Subject Item */}
@@ -100,7 +121,11 @@ function SubjectsList({ filiereId, niveauId }) {
 
             {
                 displayCreateSubject ?
-                    <NewSubject closeModal={closeModal} />
+                    <NewSubject level_id={level_id}
+                        closeModal={closeModal}
+                        setResponseMessage={setResponseMessage}
+                        refresh={refresh} />
+
                     : null
             }
 

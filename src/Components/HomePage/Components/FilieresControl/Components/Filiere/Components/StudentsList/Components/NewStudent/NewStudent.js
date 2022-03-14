@@ -10,10 +10,14 @@ import axios from 'axios';
 
 import "./NewStudent.css";
 
-function NewStudent({ closeModal, niveau_id }) {
+import { API_BASE_URL } from '../../../../../../../../../../Constants/Global';
+
+
+function NewStudent({ closeModal, level_id, refresh, setResponseMessage }) {
 
     // USE STATE HOOK
-    let [studentName, setStudentName] = useState("");
+    let [studentFirstName, setStudentFirstName] = useState("");
+    let [studentLastName, setStudentLastName] = useState("");
     let [studentApogee, setStudentApogee] = useState("");
     let [studentCIN, setStudentCIN] = useState("");
     let [studentCNE, setStudentCNE] = useState("");
@@ -23,6 +27,31 @@ function NewStudent({ closeModal, niveau_id }) {
 
     let handleSubmit = (e) => {
         e.preventDefault();
+        requestNewStudent();
+    }
+
+    // REQUEST NEW STUDENT DATA
+
+    let requestNewStudent = () => {
+
+        let student_data = {
+            'first_name': studentFirstName,
+            'last_name': studentLastName,
+            'apogee': studentApogee,
+            'cin': studentCIN,
+            'cne': studentCNE,
+            'carte_id': studentCarteID,
+            'level_id': level_id
+        }
+
+        axios.post(`${API_BASE_URL}/students`, student_data)
+            .then(res => {
+                let { data } = res;
+                setResponseMessage("Student added successfully");
+                closeModal();
+                refresh();
+            });
+
     }
 
     return (
@@ -38,13 +67,25 @@ function NewStudent({ closeModal, niveau_id }) {
                 </h2>
 
                 <div className="form-item">
-                    <label htmlFor="student_name" className="form-label">Student Name</label>
+                    <label htmlFor="last_name" className="form-label">Last Name</label>
                     <input
                         type="text"
-                        id="student_name"
+                        id="last_name"
                         className="form-input"
-                        value={studentName}
-                        onChange={(e) => { setStudentName(e.target.value) }}
+                        value={studentLastName}
+                        onChange={(e) => { setStudentLastName(e.target.value) }}
+                        required
+                    />
+                </div>
+
+                <div className="form-item">
+                    <label htmlFor="first_name" className="form-label">First Name</label>
+                    <input
+                        type="text"
+                        id="first_name"
+                        className="form-input"
+                        value={studentFirstName}
+                        onChange={(e) => { setStudentFirstName(e.target.value) }}
                         required
                     />
                 </div>

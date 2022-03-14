@@ -110,3 +110,25 @@
     font-size: 1rem;
     font-weight: 100;
 }
+
+.response-message {
+    width: 100%;
+    text-align: center;
+    color: #181818;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #18181822;
+    border-radius: 10px;
+    cursor: pointer;
+    user-select: none;
+    animation: fadeInOut 1000ms ease-in-out infinite alternate;
+}
+
+@keyframes fadeInOut {
+    0% {
+        background-color: #18181833;
+    }
+    100% {
+        background-color: #18181811;
+    }
+}

@@ -12,6 +12,8 @@ import axios from 'axios';
 import AjouterFiliere from './Components/AjouterFiliere/AjouterFiliere';
 import AjouterNiveau from './Components/AjouterNiveau/AjouterNiveau';
 
+import { API_BASE_URL } from '../../../../Constants/Global';
+
 import "./FilieresControl.css";
 
 function FilieresControl() {
@@ -20,11 +22,35 @@ function FilieresControl() {
     let [displayCreateNewFiliere, setDisplayCreateNewFiliere] = useState(false);
     let [displayCreateNewNiveau, setDisplayCreateNewNiveau] = useState(false);
 
+    let [filieresList, setFilieresList] = useState([]);
+    let [levelsList, setLevelsList] = useState([]);
+
     // Change page title
 
     useEffect(() => {
         document.title = "Control Panel - Filieres"
+        requestFilieresData();
+        requestLevelsData();
     }, []);
+
+    // REQUEST FILIERES DATA
+
+    let requestFilieresData = () => {
+        axios.get(`${API_BASE_URL}/filieres`)
+            .then((res) => {
+                setFilieresList(res.data);
+            });
+    }
+
+    // REQUEST FILIERES DATA
+
+    let requestLevelsData = () => {
+        axios.get(`${API_BASE_URL}/levels`)
+            .then((res) => {
+                setLevelsList(res.data);
+                console.log(res.data);
+            });
+    }
 
     return (
         <div className="control-container">
@@ -64,85 +90,28 @@ function FilieresControl() {
 
                 <div className="liste-filieres">
 
-                    <div className="filiere">
-                        <h2 className="filiere-name">Master Big Data & IoT</h2>
-                        <ul className="filiere-niveaux">
-                            <Link className="offer-item" to="/home/filieres/niveau/10">
-                                <li className="niveau-libele">1er année</li>
-                            </Link>
-                            <Link className="offer-item" to="/home/filieres/niveau/10">
-                                <li className="niveau-libele">2eme année</li>
-                            </Link>
-                        </ul>
-                    </div>
+                    {
+                        filieresList.map(filiere => (
 
-                    <div className="filiere">
-                        <Link className="offer-item" to="/home/filieres/niveau/10">
-                            <h2 className="filiere-name">Génie Informatique</h2>
-                        </Link>
-                        <ul className="filiere-niveaux">
-                            <Link className="offer-item" to="/home/filieres/niveau/10">
-                                <li className="niveau-libele">1er année</li>
-                            </Link>
-                            <Link className="offer-item" to="/home/filieres/niveau/10">
-                                <li className="niveau-libele">2eme année</li>
-                            </Link>
-                            <Link className="offer-item" to="/home/filieres/niveau/10">
-                                <li className="niveau-libele">3eme année</li>
-                            </Link>
-                        </ul>
-                    </div>
+                            <div className="filiere">
+                                <h2 className="filiere-name">{filiere.name}</h2>
+                                <ul className="filiere-niveaux">
 
-                    <div className="filiere">
-                        <Link className="offer-item" to="/home/filieres/niveau/10">
-                            <h2 className="filiere-name">Génie Industriel</h2>
-                        </Link>
-                        <ul className="filiere-niveaux">
-                            <Link className="offer-item" to="/home/filieres/niveau/10">
-                                <li className="niveau-libele">1er année</li>
-                            </Link>
-                            <Link className="offer-item" to="/home/filieres/niveau/10">
-                                <li className="niveau-libele">2eme année</li>
-                            </Link>
-                            <Link className="offer-item" to="/home/filieres/niveau/10">
-                                <li className="niveau-libele">3eme année</li>
-                            </Link>
-                        </ul>
-                    </div>
+                                    {
+                                        levelsList.filter(level => level.filiere_id == filiere.id).map(level => (
 
-                    <div className="filiere">
-                        <Link className="offer-item" to="/home/filieres/niveau/10">
-                            <h2 className="filiere-name">Génie Mécanique</h2>
-                        </Link>
-                        <ul className="filiere-niveaux">
-                            <Link className="offer-item" to="/home/filieres/niveau/10">
-                                <li className="niveau-libele">1er année</li>
-                            </Link>
-                            <Link className="offer-item" to="/home/filieres/niveau/10">
-                                <li className="niveau-libele">2eme année</li>
-                            </Link>
-                            <Link className="offer-item" to="/home/filieres/niveau/10">
-                                <li className="niveau-libele">3eme année</li>
-                            </Link>
-                        </ul>
-                    </div>
+                                            <Link className="offer-item" to={"/home/filieres/niveau/" + level.id}>
+                                                <li className="niveau-libele">{level.libelle}</li>
+                                            </Link>
 
-                    <div className="filiere">
-                        <Link className="offer-item" to="/home/filieres/niveau/10">
-                            <h2 className="filiere-name">Génie Electromécanique</h2>
-                        </Link>
-                        <ul className="filiere-niveaux">
-                            <Link className="offer-item" to="/home/filieres/niveau/10">
-                                <li className="niveau-libele">1er année</li>
-                            </Link>
-                            <Link className="offer-item" to="/home/filieres/niveau/10">
-                                <li className="niveau-libele">2eme année</li>
-                            </Link>
-                            <Link className="offer-item" to="/home/filieres/niveau/10">
-                                <li className="niveau-libele">3eme année</li>
-                            </Link>
-                        </ul>
-                    </div>
+                                        ))
+                                    }
+
+                                </ul>
+                            </div>
+
+                        ))
+                    }
 
                 </div>
 

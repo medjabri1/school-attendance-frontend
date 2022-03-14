@@ -7,7 +7,7 @@ import axios from 'axios';
 
 import ReactDOM from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHandPointRight, faLockOpen, faClipboardList } from '@fortawesome/free-solid-svg-icons'
+import { faCalendarAlt, faUsers, faClipboardList } from '@fortawesome/free-solid-svg-icons'
 
 import "./FiliereNiveau.css";
 
@@ -15,13 +15,14 @@ import SubjectsList from './Components/SubjectsList/SubjectsList';
 import StudentsList from './Components/StudentsList/StudentsList';
 import SessionsList from './Components/SessionsList/SessionsList';
 
+import { API_BASE_URL } from '../../../.././../../Constants/Global';
+
 function FiliereNiveau() {
 
     // CONST - VARS
 
     let navigate = useNavigate();
-    let filiere_id = useParams().id;
-    let niveau_id = 0;
+    let level_id = useParams().id;
 
     // USE STATE HOOK
 
@@ -29,24 +30,48 @@ function FiliereNiveau() {
     let [totalSubjects, setTotalSubjects] = useState(0);
     let [totalSessions, setTotalSessions] = useState(0);
 
+    let [levelData, setLevelData] = useState({});
+    let [filiereData, setFiliereData] = useState({});
+
     // USE EFFECT HOOK
 
     useEffect(() => {
-        document.title = "Filiere - " + "Big Data";
+        document.title = "Filiere - " + "Level";
     }, []);
+
+    useEffect(() => {
+        requestLevelOverviewData();
+    }, []);
+
+    // REQUEST LEVEL OVERVIEW DATA
+
+    let requestLevelOverviewData = () => {
+
+        axios.get(`${API_BASE_URL}/overview/level/${level_id}`)
+            .then((res) => {
+
+                let data = res.data;
+
+                setTotalStudents(data.total_students);
+                setTotalSessions(data.total_sessions);
+                setTotalSubjects(data.total_subjects);
+                setLevelData(data.level);
+                setFiliereData(data.filiere)
+            });
+
+    }
 
     return (
         <div className="filiere-container">
             <div className="filiere-content">
-                {/* <h2 className="filiere-name">{filiereName} - {niveauLibelle}</h2> */}
-                <h2 className="filiere-name">Master Big Data & IoT <span>- 1er année</span></h2>
+                <h2 className="filiere-name">{filiereData.name} <span>- {levelData.libelle}</span></h2>
 
                 <div className="overview-container">
 
                     <div className="overview-item">
                         <div className="icon">
                             <FontAwesomeIcon
-                                icon={faClipboardList}
+                                icon={faUsers}
                             />
                         </div>
                         <div className="content">
@@ -58,19 +83,19 @@ function FiliereNiveau() {
                     <div className="overview-item">
                         <div className="icon">
                             <FontAwesomeIcon
-                                icon={faLockOpen}
+                                icon={faClipboardList}
                             />
                         </div>
                         <div className="content">
                             <h2 className="item-title">Total Subjects</h2>
-                            <p className="item-data">{totalStudents}</p>
+                            <p className="item-data">{totalSubjects}</p>
                         </div>
                     </div>
 
                     <div className="overview-item">
                         <div className="icon">
                             <FontAwesomeIcon
-                                icon={faLockOpen}
+                                icon={faCalendarAlt}
                             />
                         </div>
                         <div className="content">
@@ -81,9 +106,9 @@ function FiliereNiveau() {
 
                 </div>
 
-                <SubjectsList filiereId={filiere_id} niveauId={niveau_id} />
-                <StudentsList filiereId={filiere_id} niveauId={niveau_id} />
-                <SessionsList filiereId={filiere_id} niveauId={niveau_id} />
+                <SubjectsList level_id={level_id} />
+                <StudentsList level_id={level_id} />
+                <SessionsList level_id={level_id} />
 
             </div>
         </div>

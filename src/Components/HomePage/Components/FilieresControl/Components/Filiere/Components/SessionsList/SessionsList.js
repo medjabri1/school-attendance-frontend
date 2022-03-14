@@ -1,6 +1,8 @@
 import React from 'react'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+
+import axios from 'axios';
 
 import { Link } from 'react-router-dom'
 
@@ -10,7 +12,30 @@ import { faPenToSquare, faPlusCircle, faTh, faList, faEye } from '@fortawesome/f
 
 import "./SessionsList.css";
 
-function SessionsList({ filiereId, niveauId }) {
+import { API_BASE_URL } from '../../../../../../../../Constants/Global';
+
+function SessionsList({ level_id }) {
+
+    // USE STATE HOOK
+
+    let [sessionsList, setSessionsList] = useState([]);
+
+    // USE EFFECT HOOK 
+
+    useEffect(() => {
+        requestSessionsData();
+    }, []);
+
+    // REQUEST SESSIONS LIST DATA
+
+    let requestSessionsData = () => {
+
+        axios.get(`${API_BASE_URL}/sessions/level/${level_id}`)
+            .then((res) => {
+                setSessionsList(res.data);
+            });
+
+    }
 
     return (
         <div className="sessions-list">
@@ -20,45 +45,23 @@ function SessionsList({ filiereId, niveauId }) {
 
             <div className="list-items">
 
-                <div className="session-item">
-                    <h2 className="salle">Amphi Al-Khawarizmi</h2>
-                    <p className="date">02-10-2021</p>
+                {
 
-                    <Link className="view-details" to="/home/sessions/10" target="_blank">
-                        <FontAwesomeIcon icon={faEye} className="icon" />
-                        <span>Details</span>
-                    </Link>
-                </div>
+                    sessionsList.map(session => (
 
-                <div className="session-item">
-                    <h2 className="salle">Labo Master</h2>
-                    <p className="date">09-10-2021</p>
+                        <div className="session-item" key={session.id}>
+                            <h2 className="salle">{session.salle}</h2>
+                            <p className="date">{session.created_at.substr(0, 16).replace('T', ' ')}</p>
 
-                    <Link className="view-details" to="/home/sessions/10" target="_blank">
-                        <FontAwesomeIcon icon={faEye} className="icon" />
-                        <span>Details</span>
-                    </Link>
-                </div>
+                            <Link className="view-details" to={"/home/sessions/" + session.id} target="_blank">
+                                <FontAwesomeIcon icon={faEye} className="icon" />
+                                <span>Details</span>
+                            </Link>
+                        </div>
 
-                <div className="session-item">
-                    <h2 className="salle">Salle 2-2</h2>
-                    <p className="date">16-10-2021</p>
+                    ))
 
-                    <Link className="view-details" to="/home/sessions/10" target="_blank">
-                        <FontAwesomeIcon icon={faEye} className="icon" />
-                        <span>Details</span>
-                    </Link>
-                </div>
-
-                <div className="session-item">
-                    <h2 className="salle">Labo Master</h2>
-                    <p className="date">06-11-2021</p>
-
-                    <Link className="view-details" to="/home/sessions/10" target="_blank">
-                        <FontAwesomeIcon icon={faEye} className="icon" />
-                        <span>Details</span>
-                    </Link>
-                </div>
+                }
 
             </div >
 

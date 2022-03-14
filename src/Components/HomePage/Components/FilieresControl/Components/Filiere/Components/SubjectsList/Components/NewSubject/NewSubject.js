@@ -10,7 +10,9 @@ import axios from 'axios';
 
 import "./NewSubject.css";
 
-function NewSubject({ closeModal }) {
+import { API_BASE_URL } from '../../../../../../../../../../Constants/Global';
+
+function NewSubject({ level_id, closeModal, setResponseMessage, refresh }) {
 
     // USE STATE HOOK
     let [subjectTitle, setSubjectTitle] = useState("");
@@ -19,6 +21,26 @@ function NewSubject({ closeModal }) {
 
     let handleSubmit = (e) => {
         e.preventDefault();
+        requestNewSubject();
+    }
+
+    // REQUEST NEW SUBJECT DATA
+
+    let requestNewSubject = () => {
+
+        let subject_data = {
+            'level_id': level_id,
+            'name': subjectTitle
+        }
+
+        axios.post(`${API_BASE_URL}/subjects`, subject_data)
+            .then(res => {
+                let { data } = res;
+                setResponseMessage("Subject added successfully");
+                closeModal();
+                refresh();
+            });
+
     }
 
     return (

@@ -101,3 +101,15 @@
 .sessions-list-items .session .view-details .icon {
     margin-right: 5px;
 }
+
+/* OVERVIEW GRAPHS */
+
+.overview-graphs {
+    /* border: 2px solid #181818; */
+    width: 80%;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 2px #18181855, 0px 0px 6px #18181855;
+}

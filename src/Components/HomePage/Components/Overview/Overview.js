@@ -6,24 +6,24 @@ import { Link } from 'react-router-dom';
 
 import ReactDOM from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faClipboardList, faCog, faLock, faLockOpen, faUsers, faEye, faBookmark } from '@fortawesome/free-solid-svg-icons'
+import { faClipboardList, faUsers, faUser, faCalendarAlt, faLayerGroup } from '@fortawesome/free-solid-svg-icons'
 
 import axios from 'axios';
 
+import { API_BASE_URL } from '../../../../Constants/Global';
+
 import "./Overview.css";
 
-function HomePanel({ currentRecruiterId }) {
-
-    const API_BASE_URL = 'http://localhost:8081/api';
+function HomePanel({ }) {
 
     // USE STATES HOOK
 
-    let [totalOffers, setTotalOffers] = useState(0);
-    let [totalOpen, setTotalOpen] = useState(0);
-    let [totalClosed, setTotalClosed] = useState(0);
-    let [totalSubmissions, setTotalSubmissions] = useState(0);
-    let [totalViews, setTotalViews] = useState(0);
-    let [totalFavorites, setTotalFavorites] = useState(0);
+    let [totalSessions, setTotalSessions] = useState(0);
+    let [totalStudents, setTotalStudents] = useState(0);
+    let [totalSubjects, setTotalSubjects] = useState(0);
+    let [totalProfessors, setTotalProfessors] = useState(0);
+    let [totalFilieres, setTotalFilieres] = useState(0);
+    let [totalLevels, setTotalLevels] = useState(0);
 
     // USE EFFECT HOOK
 
@@ -32,8 +32,27 @@ function HomePanel({ currentRecruiterId }) {
     }, []);
 
     useEffect(() => {
-        // requestOverviewData();
-    }, [currentRecruiterId]);
+        requestOverviewData();
+    }, []);
+
+    // REQUEST OVERVIEW DATA
+
+    let requestOverviewData = () => {
+
+        axios.get(`${API_BASE_URL}/overview`)
+            .then((res) => {
+
+                let data = res.data;
+                setTotalStudents(data.total_students);
+                setTotalSessions(data.total_sessions);
+                setTotalLevels(data.total_levels);
+                setTotalSubjects(data.total_subjects);
+                setTotalFilieres(data.total_filieres);
+                setTotalProfessors(data.total_professors);
+
+            });
+
+    }
 
     return (
         <div className="school-panel-container">
@@ -51,36 +70,36 @@ function HomePanel({ currentRecruiterId }) {
                         <div className="overview-item">
                             <div className="icon">
                                 <FontAwesomeIcon
-                                    icon={faClipboardList}
+                                    icon={faCalendarAlt}
                                 />
                             </div>
                             <div className="content">
-                                <h2 className="item-title">Total Classes</h2>
-                                <p className="item-data">{totalOffers}</p>
+                                <h2 className="item-title">Total Sessions</h2>
+                                <p className="item-data">{totalSessions}</p>
                             </div>
                         </div>
 
                         <div className="overview-item">
                             <div className="icon">
                                 <FontAwesomeIcon
-                                    icon={faLockOpen}
+                                    icon={faUser}
                                 />
                             </div>
                             <div className="content">
                                 <h2 className="item-title">Total Students</h2>
-                                <p className="item-data">{totalOpen}</p>
+                                <p className="item-data">{totalStudents}</p>
                             </div>
                         </div>
 
                         <div className="overview-item">
                             <div className="icon">
                                 <FontAwesomeIcon
-                                    icon={faLock}
+                                    icon={faClipboardList}
                                 />
                             </div>
                             <div className="content">
                                 <h2 className="item-title">Total Subjects</h2>
-                                <p className="item-data">{totalClosed}</p>
+                                <p className="item-data">{totalSubjects}</p>
                             </div>
                         </div>
 
@@ -92,31 +111,31 @@ function HomePanel({ currentRecruiterId }) {
                             </div>
                             <div className="content">
                                 <h2 className="item-title">Total Professors</h2>
-                                <p className="item-data">{totalSubmissions}</p>
+                                <p className="item-data">{totalProfessors}</p>
                             </div>
                         </div>
 
                         <div className="overview-item">
                             <div className="icon">
                                 <FontAwesomeIcon
-                                    icon={faEye}
+                                    icon={faClipboardList}
                                 />
                             </div>
                             <div className="content">
                                 <h2 className="item-title">Total Filieres</h2>
-                                <p className="item-data">{totalViews}</p>
+                                <p className="item-data">{totalFilieres}</p>
                             </div>
                         </div>
 
                         <div className="overview-item">
                             <div className="icon">
                                 <FontAwesomeIcon
-                                    icon={faBookmark}
+                                    icon={faLayerGroup}
                                 />
                             </div>
                             <div className="content">
-                                <h2 className="item-title">Total Niveaux</h2>
-                                <p className="item-data">{totalFavorites}</p>
+                                <h2 className="item-title">Total Levels</h2>
+                                <p className="item-data">{totalLevels}</p>
                             </div>
                         </div>
 
