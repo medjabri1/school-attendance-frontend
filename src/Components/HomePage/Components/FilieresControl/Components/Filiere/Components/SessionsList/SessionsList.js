@@ -53,7 +53,7 @@ function SessionsList({ level_id }) {
                             <h2 className="salle">{session.salle}</h2>
                             <p className="date">{session.created_at.substr(0, 16).replace('T', ' ')}</p>
 
-                            <Link className="view-details" to={"/home/sessions/" + session.id} target="_blank">
+                            <Link className="view-details" to={"/home/sessions/session/" + session.id} target="_blank">
                                 <FontAwesomeIcon icon={faEye} className="icon" />
                                 <span>Details</span>
                             </Link>

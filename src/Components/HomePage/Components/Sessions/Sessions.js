@@ -119,7 +119,7 @@ function Sessions() {
                                     <p className="salle">{session.subject_data.name}</p>
                                     <p className="date">{session.session_data.created_at.substr(0, 16).replace('T', ' ')}</p>
 
-                                    <Link className="view-details" to="/home/sessions/session/10">
+                                    <Link className="view-details" to={"/home/sessions/session/" + session.session_data.id}>
                                         <FontAwesomeIcon icon={faEye} className="icon" />
                                         <span>Details</span>
                                     </Link>
