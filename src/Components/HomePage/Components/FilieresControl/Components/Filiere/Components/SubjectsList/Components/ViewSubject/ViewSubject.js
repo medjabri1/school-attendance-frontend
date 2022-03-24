@@ -18,7 +18,7 @@ function SubjectItem({ closeModal, subject_id }) {
 
     // USE STATE HOOK 
 
-    let [subjectData, setSubjectData] = useState({ "created_at": "0000-00-00" });
+    let [subjectData, setSubjectData] = useState({ "name": "", "created_at": "0000-00-00" });
     let [profData, setProfData] = useState({ "first_name": "NO", "last_name": "Professor" });
     let [sessionsList, setSessionsList] = useState([]);
 
@@ -85,10 +85,10 @@ function SubjectItem({ closeModal, subject_id }) {
                         {
                             sessionsList.map(session => (
 
-                                <div className="list-item" key={session.id}>
-                                    <p className="salle">{session.salle}</p>
-                                    <p className="date">{session.created_at.substr(0, 16).replace('T', ' ')}</p>
-                                    <Link className="view-details" to={"/home/sessions/session/" + session.id} target="_blank">
+                                <div className="list-item" key={session.session.id}>
+                                    <p className="salle">{session.classroom.libelle}</p>
+                                    <p className="date">{session.session.created_at.substr(0, 16).replace('T', ' ')}</p>
+                                    <Link className="view-details" to={"/home/sessions/session/" + session.session.id} target="_blank">
                                         <FontAwesomeIcon icon={faEye} className="icon" />
                                         <span>Details</span>
                                     </Link>
