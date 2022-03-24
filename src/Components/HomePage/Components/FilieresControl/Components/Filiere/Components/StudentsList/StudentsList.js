@@ -77,7 +77,7 @@ function StudentsList({ level_id }) {
 
                         <div className="student-item" key={student.id}>
                             <h2 className="student-name">{student.first_name} {student.last_name}</h2>
-                            <p className="collapsible">-{student.apogee}</p>
+                            <p className="collapsible">-APG: {student.apogee}</p>
                             <p className="collapsible">-CIN: {student.cin}</p>
                             <p className="collapsible">-CNE: {student.cne}</p>
                         </div>

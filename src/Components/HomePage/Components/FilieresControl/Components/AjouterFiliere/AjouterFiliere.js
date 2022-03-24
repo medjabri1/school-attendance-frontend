@@ -10,7 +10,9 @@ import axios from 'axios';
 
 import "./AjouterFiliere.css";
 
-function AjouterFiliere({ closeModal }) {
+import { API_BASE_URL } from '../../../../../../Constants/Global';
+
+function AjouterFiliere({ closeModal, refresh }) {
 
     // USE STATE HOOK
     let [filiereName, setFiliereName] = useState("");
@@ -19,7 +21,25 @@ function AjouterFiliere({ closeModal }) {
 
     let handleSubmit = (e) => {
         e.preventDefault();
+        requestAddNewFiliere();
     }
+
+    // REQUEST ADD NEW FILIERE
+
+    let requestAddNewFiliere = () => {
+
+        let filiere_data = {
+            "name": filiereName
+        }
+
+        axios.post(`${API_BASE_URL}/filieres`, filiere_data)
+            .then(res => {
+                let { data } = res;
+                closeModal();
+                refresh();
+            });
+
+    };
 
     return (
         <div className="ajouter-filiere-modal">

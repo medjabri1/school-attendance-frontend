@@ -30,8 +30,8 @@ function FiliereNiveau() {
     let [totalSubjects, setTotalSubjects] = useState(0);
     let [totalSessions, setTotalSessions] = useState(0);
 
-    let [levelData, setLevelData] = useState({});
-    let [filiereData, setFiliereData] = useState({});
+    let [levelData, setLevelData] = useState({ libelle: "" });
+    let [filiereData, setFiliereData] = useState({ name: "" });
 
     // USE EFFECT HOOK
 

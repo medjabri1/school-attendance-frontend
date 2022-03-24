@@ -19,7 +19,7 @@ function SubjectItem({ closeModal, subject_id }) {
     // USE STATE HOOK 
 
     let [subjectData, setSubjectData] = useState({ "created_at": "0000-00-00" });
-    let [profData, setProfData] = useState({ "name": "Mohammed BADAOUI" });
+    let [profData, setProfData] = useState({ "first_name": "NO", "last_name": "Professor" });
     let [sessionsList, setSessionsList] = useState([]);
 
     // USE EFFECT HOOK 
@@ -36,6 +36,9 @@ function SubjectItem({ closeModal, subject_id }) {
             .then((res) => {
                 let data = res.data;
                 setSubjectData(data.subject);
+                if (data.professor != null) {
+                    setProfData(data.professor);
+                }
                 setSessionsList(data.sessions);
             });
 
@@ -60,7 +63,7 @@ function SubjectItem({ closeModal, subject_id }) {
 
                     <div className="stats-item">
                         <p className="stats-label">Prof</p>
-                        <p className="stats-data">{profData.name}</p>
+                        <p className="stats-data">{profData.first_name + " " + profData.last_name}</p>
                     </div>
 
                     <div className="stats-item">

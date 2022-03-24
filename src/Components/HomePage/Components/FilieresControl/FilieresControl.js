@@ -48,8 +48,14 @@ function FilieresControl() {
         axios.get(`${API_BASE_URL}/levels`)
             .then((res) => {
                 setLevelsList(res.data);
-                console.log(res.data);
             });
+    }
+
+    // LET REFRESH FILIERES DATA
+
+    let refresh = () => {
+        requestFilieresData();
+        requestLevelsData();
     }
 
     return (
@@ -60,6 +66,7 @@ function FilieresControl() {
                 displayCreateNewFiliere ?
                     <AjouterFiliere
                         closeModal={() => { setDisplayCreateNewFiliere(false) }}
+                        refresh={refresh}
                     />
                     : null
             }
@@ -69,6 +76,7 @@ function FilieresControl() {
                 displayCreateNewNiveau ?
                     <AjouterNiveau
                         closeModal={() => { setDisplayCreateNewNiveau(false) }}
+                        refresh={refresh}
                     />
                     : null
             }
@@ -93,7 +101,7 @@ function FilieresControl() {
                     {
                         filieresList.map(filiere => (
 
-                            <div className="filiere">
+                            <div className="filiere" key={filiere.id}>
                                 <h2 className="filiere-name">{filiere.name}</h2>
                                 <ul className="filiere-niveaux">
 

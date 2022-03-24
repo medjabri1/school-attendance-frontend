@@ -50,6 +50,7 @@ function SessionDetails() {
     let [filiereData, setFiliereData] = useState({ name: '' });
     let [subjectData, setSubjectData] = useState({ name: '' });
     let [sessionData, setSessionData] = useState({ created_at: '' });
+    let [classroomData, setClassroomData] = useState({ libelle: '' });
 
     // USE EFFECT HOOK
 
@@ -71,6 +72,7 @@ function SessionDetails() {
                 setFiliereData(data.filiere);
                 setSubjectData(data.subject);
                 setSessionData(data.session);
+                setClassroomData(data.classroom);
 
                 refreshPieChart(data.total_attended, data.total_absent);
             });
@@ -121,7 +123,7 @@ function SessionDetails() {
                 <h2 className="filiere-name content-title"><span>Filiere : </span>{filiereData.name}</h2>
                 <h2 className="subject-name content-title"><span>Subject : </span>{subjectData.name}</h2>
                 <h2 className="session-date content-title">Date : {sessionData.created_at.substr(0, 16).replace('T', ' ')}</h2>
-                <h2 className="session-date content-title">Salle : {sessionData.salle}</h2>
+                <h2 className="session-date content-title">Salle : {classroomData.libelle}</h2>
 
                 <div className="session-overview-container">
 

@@ -10,17 +10,63 @@ import axios from 'axios';
 
 import "./AjouterNiveau.css";
 
-function AjouterNiveau({ closeModal }) {
+import { API_BASE_URL } from '../../../../../../Constants/Global';
+
+function AjouterNiveau({ closeModal, refresh }) {
 
     // USE STATE HOOK
-    let [niveauFiliere, setNiveauFiliere] = useState("Big Data");
+    let [niveauFiliere, setNiveauFiliere] = useState(0);
     let [niveauLibelle, setNiveauLibelle] = useState("1er année");
+
+    let [filieresList, setFilieresList] = useState([]);
+
+    // USE EFFECT HOOK
+
+    useEffect(() => {
+        requestFilieresData();
+    }, []);
 
     // HANDLE SUBMIT
 
     let handleSubmit = (e) => {
         e.preventDefault();
+        requestCreateNewLevel();
     }
+
+    // REQUEST FILIERES DATA
+
+    let requestFilieresData = () => {
+        axios.get(`${API_BASE_URL}/filieres`)
+            .then((res) => {
+                setFilieresList(res.data);
+                setNiveauFiliere(res.data[0].id);
+                console.log(res.data[0].id);
+            });
+    }
+
+    // REQUEST CREATE NEW LEVEL
+
+
+
+    // REQUEST ADD NEW PROF
+
+    let requestCreateNewLevel = () => {
+
+        let level_data = {
+            "filiere_id": niveauFiliere,
+            "libelle": niveauLibelle
+        };
+
+        console.log(level_data);
+
+        axios.post(`${API_BASE_URL}/levels`, level_data)
+            .then(res => {
+                let { data } = res;
+                closeModal();
+                refresh();
+            });
+
+    };
 
     return (
         <div className="ajouter-niveau-modal">
@@ -43,9 +89,11 @@ function AjouterNiveau({ closeModal }) {
                         onChange={(e) => { setNiveauFiliere(e.target.value) }}
                         required
                     >
-                        <option value="1">Big Data</option>
-                        <option value="2">Génie Informatique</option>
-                        <option value="3">Génie Industriel</option>
+                        {
+                            filieresList.map((filiere, index) => (
+                                <option key={index} value={filiere.id}>{filiere.name}</option>
+                            ))
+                        }
                     </select>
                 </div>
 
@@ -58,9 +106,9 @@ function AjouterNiveau({ closeModal }) {
                         onChange={(e) => { setNiveauLibelle(e.target.value) }}
                         required
                     >
-                        <option value="1">1er année</option>
-                        <option value="2">2eme année</option>
-                        <option value="3">3eme année</option>
+                        <option value="1er année">1er année</option>
+                        <option value="2eme année">2eme année</option>
+                        <option value="3eme année">3eme année</option>
                     </select>
                 </div>
 

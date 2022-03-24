@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 
 import ReactDOM from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -8,8 +9,11 @@ import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios';
 
 import './Login.css';
+import { Navigate } from 'react-router-dom'
 
 function Login({ API_BASE_URL, gotoSignup, closeModal, setUserId }) {
+
+    let navigate = useNavigate();
 
     // USE STATE HOOK
 
@@ -25,7 +29,8 @@ function Login({ API_BASE_URL, gotoSignup, closeModal, setUserId }) {
 
     let handleLoginSubmit = (e) => {
         e.preventDefault();
-        request_login();
+        // request_login();
+        navigate("./home");
     }
 
     // Login Request Handler

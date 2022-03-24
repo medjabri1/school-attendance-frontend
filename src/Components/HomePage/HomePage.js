@@ -14,6 +14,7 @@ import "./HomePage.css";
 import FiliereNiveau from './Components/FilieresControl/Components/Filiere/FiliereNiveau';
 import Sessions from './Components/Sessions/Sessions';
 import SessionDetails from './Components/Sessions/Components/SessionDetails/SessionDetails';
+import ProfsControl from './Components/ProfsControl/ProfsControl';
 
 function HomePage() {
 
@@ -70,10 +71,16 @@ function HomePage() {
             <Header />
             <Routes>
                 <Route path="/" element={<Home />} />
+                {/* FILIERES */}
                 <Route path="/filieres" element={<FilieresControl />} />
                 <Route path="/filieres/niveau/:id" element={<FiliereNiveau />} />
+
+                {/* SESSIONS */}
                 <Route path="/sessions" element={<Sessions />} />
                 <Route path="/sessions/session/:id" element={<SessionDetails />} />
+
+                {/* PROFS */}
+                <Route path="/profs" element={<ProfsControl />} />
                 <Route path="/*" element={<h2>Default route for Home Page</h2>} />
             </Routes>
         </div>
